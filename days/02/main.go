@@ -18,7 +18,7 @@ func parseCommand(line string) (string, int, bool) {
 }
 
 func main() {
-	f_input, err := os.Open("days/02/input-example.txt")
+	f_input, err := os.Open("days/02/input.txt")
 	if err != nil {
 		panic(err)
 	}

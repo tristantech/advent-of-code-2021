@@ -33,17 +33,19 @@ def solve(template, rules, iterations):
         # Apply the updates to the main pair counter.
         c += updates
 
-    # Finally, we need to convert pair counts to individual letter counts
+    # Finally, we need to convert pair counts to individual letter counts. This
+    # double-counts all letters except the first and last.
     letter_counts = defaultdict(lambda: 0)
     for pair in c.keys():
         letter_counts[pair[0]] += c[pair]
         letter_counts[pair[1]] += c[pair]
     
-    # Because we were counting pairs and not letters, most letters are double-
-    # counted. (The ones at the ends were not) To remedy this, divide by two
-    # and round up.
-    return (math.ceil(max(letter_counts.values()) / 2) - 
-            math.ceil(min(letter_counts.values()) / 2))
+    # Increase first and last letters from starting string
+    letter_counts[template[0]] += 1
+    letter_counts[template[-1]] += 1
+
+    return ((max(letter_counts.values()) // 2) - 
+            (min(letter_counts.values()) // 2))
 
 
 with open(FILE, "r") as f:
